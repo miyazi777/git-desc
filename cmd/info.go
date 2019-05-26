@@ -37,6 +37,9 @@ to quickly create a Cobra application.`,
 			return err
 		}
 		description, err := git.GetDesctiption(branchName)
+		if err != nil {
+			return err
+		}
 		fmt.Printf("description: %s\n", description)
 		return nil
 	},
