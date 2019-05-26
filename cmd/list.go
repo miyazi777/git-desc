@@ -17,6 +17,7 @@ package cmd
 import (
 	"fmt"
 
+	"gitdesc/git"
 	"github.com/spf13/cobra"
 )
 
@@ -30,8 +31,15 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("list called")
+	RunE: func(cmd *cobra.Command, args []string) error {
+		descriptionMap, err := git.BuildDescriptionMap()
+		if err != nil {
+			return err
+		}
+		for branchName, description := range descriptionMap {
+			fmt.Printf("%s : %s\n", branchName, description)
+		}
+		return nil
 	},
 }
 

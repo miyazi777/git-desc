@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"os/exec"
+	"regexp"
 	"strings"
 )
 
@@ -46,4 +47,40 @@ func GetDesctiption(branchName string) (string, error) {
 
 	desc := stdout.String()
 	return strings.Trim(desc, "\n"), nil
+}
+
+// 説明マップ構築
+func BuildDescriptionMap() (map[string]string, error) {
+	cmd := exec.Command("git", "config", "--local", "--list")
+	var stdout bytes.Buffer
+	cmd.Stdout = &stdout
+	err := cmd.Run()
+	if err != nil {
+		return nil, errors.New("Not a git repository")
+	}
+
+	configList := strings.Split(stdout.String(), "\n")
+	descLineReg := regexp.MustCompile(`^branch.*description=`)
+
+	descMap := make(map[string]string)
+	for _, configLine := range configList {
+		if descLineReg.MatchString(configLine) {
+			desc := extractDescription(configLine)
+
+			branchName := extractBranchName(configLine)
+			descMap[branchName] = desc
+		}
+	}
+
+	return descMap, nil
+}
+
+func extractDescription(line string) string {
+	descReg := regexp.MustCompile(`^branch.*description=`)
+	return descReg.ReplaceAllString(line, "")
+}
+
+func extractBranchName(line string) string {
+	reg := regexp.MustCompile(`(branch\.|\.description|=.+)`)
+	return reg.ReplaceAllString(line, "")
 }
