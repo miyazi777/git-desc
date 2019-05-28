@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/spf13/cobra"
 
-	"gitdesc/git"
+	"github.com/miyazi777/gitdesc/git"
 )
 
 // setCmd represents the set command

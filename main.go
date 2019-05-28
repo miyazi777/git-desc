@@ -14,7 +14,7 @@
 
 package main
 
-import "gitdesc/cmd"
+import "github.com/miyazi777/gitdesc/cmd"
 
 func main() {
 	cmd.Execute()

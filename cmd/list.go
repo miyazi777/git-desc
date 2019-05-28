@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 
-	"gitdesc/git"
 	"github.com/InVisionApp/tabular"
+	"github.com/miyazi777/gitdesc/git"
 	"github.com/spf13/cobra"
 )
 
