@@ -20,8 +20,8 @@ var listCmd = &cobra.Command{
 		}
 
 		tab := tabular.New()
-		tab.Col("branch", "Branch", 30)
-		tab.Col("desc", "Description", 40)
+		tab.Col("branch", "Branch", 40)
+		tab.Col("desc", "Description", 50)
 		format := tab.Print("*")
 
 		for branchName, description := range descriptionMap {
