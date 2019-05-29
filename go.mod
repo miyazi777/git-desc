@@ -1,4 +1,4 @@
-module github.com/miyazi777/gitdesc
+module github.com/miyazi777/git-desc
 
 go 1.12
 
