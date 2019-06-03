@@ -4,5 +4,6 @@ go 1.12
 
 require (
 	github.com/InVisionApp/tabular v0.3.0
+	github.com/mattn/go-runewidth v0.0.4
 	github.com/spf13/cobra v0.0.4
 )

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/InVisionApp/tabular"
+	"github.com/mattn/go-runewidth"
 	"github.com/miyazi777/git-desc/git"
 	"github.com/spf13/cobra"
 )
@@ -25,7 +26,7 @@ var listCmd = &cobra.Command{
 		format := tab.Print("*")
 
 		for branchName, description := range descriptionMap {
-			fmt.Printf(format, branchName, description)
+			fmt.Printf(format, runewidth.Truncate(branchName, 40, "..."), runewidth.Truncate(description, 50, "..."))
 		}
 		return nil
 	},
