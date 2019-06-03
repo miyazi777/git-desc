@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/miyazi777/gitdesc/git"
+	"github.com/miyazi777/git-desc/git"
 	"github.com/spf13/cobra"
 )
 
