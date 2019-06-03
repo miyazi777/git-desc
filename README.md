@@ -1,4 +1,4 @@
-# gitdesc
+# git-desc
 これはgit branch --edit-descriptionなどでブランチに説明を追加するコマンドの代わりとなるCLIツールです。
 
 ## Install
