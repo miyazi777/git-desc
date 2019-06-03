@@ -6,6 +6,7 @@ import (
 	"github.com/InVisionApp/tabular"
 	"github.com/mattn/go-runewidth"
 	"github.com/miyazi777/git-desc/git"
+	"github.com/miyazi777/git-desc/terminal"
 	"github.com/spf13/cobra"
 )
 
@@ -20,13 +21,17 @@ var listCmd = &cobra.Command{
 			return err
 		}
 
+		width, err := terminal.GetWidth()
+		branchWidth := int(float32(width) * 0.3)
+		descWidth := int(float32(width) * 0.7)
+
 		tab := tabular.New()
-		tab.Col("branch", "Branch", 40)
-		tab.Col("desc", "Description", 50)
+		tab.Col("branch", "Branch", branchWidth)
+		tab.Col("desc", "Description", descWidth)
 		format := tab.Print("*")
 
 		for branchName, description := range descriptionMap {
-			fmt.Printf(format, runewidth.Truncate(branchName, 40, "..."), runewidth.Truncate(description, 50, "..."))
+			fmt.Printf(format, runewidth.Truncate(branchName, branchWidth, "..."), runewidth.Truncate(description, descWidth, "..."))
 		}
 		return nil
 	},
