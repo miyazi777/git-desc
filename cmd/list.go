@@ -17,14 +17,14 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "Information descriptions.",
 	Long:  `Information all branch descriptions.`,
-	RunE:  exec,
+	RunE:  execute,
 }
 
 func init() {
 	rootCmd.AddCommand(listCmd)
 }
 
-func exec(cmd *cobra.Command, args []string) error {
+func execute(cmd *cobra.Command, args []string) error {
 	descriptionMap, err := git.BuildDescriptionMap()
 	if err != nil {
 		return err
@@ -32,12 +32,12 @@ func exec(cmd *cobra.Command, args []string) error {
 
 	width, err := terminal.GetWidth()
 
-	branchWidthPer, err := getBranchWidthPer()
+	branchWidthPer, err := getPercentConfig("list.branch.width")
 	if err != nil {
 		return err
 	}
 
-	descWidthPer, err := getDescWidthPer()
+	descWidthPer, err := getPercentConfig("list.description.width")
 	if err != nil {
 		return err
 	}
@@ -56,28 +56,15 @@ func exec(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-func getBranchWidthPer() (float64, error) {
-	checkVal := viper.Get("list.branch.width")
+func getPercentConfig(key string) (float64, error) {
+	checkVal := viper.Get(key)
 	if checkVal == nil {
-		return 0, errors.New("Require error: list.branch.width")
+		return 0, errors.New("Require error: " + key)
 	}
 
-	val := viper.GetFloat64("list.branch.width")
+	val := viper.GetFloat64(key)
 	if val < 0.0 || val > 1.00 {
-		return 0, errors.New("Range error: list.branch.width")
-	}
-	return val, nil
-}
-
-func getDescWidthPer() (float64, error) {
-	checkVal := viper.Get("list.description.width")
-	if checkVal == nil {
-		return 0, errors.New("Require error: list.description.width")
-	}
-
-	val := viper.GetFloat64("list.description.width")
-	if val < 0.0 || val > 1.00 {
-		return 0, errors.New("Range error: list.description.width")
+		return 0, errors.New("Range error: " + key)
 	}
 	return val, nil
 }
