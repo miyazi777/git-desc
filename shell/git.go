@@ -28,7 +28,7 @@ func SetDescription(branchName string, desc string) error {
 	cmd := exec.Command("git", "config", "--local", key, desc)
 	err := cmd.Run()
 	if err != nil {
-		return errors.New("Not a git repository")
+		return err
 	}
 	return nil
 }
