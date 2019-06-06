@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/miyazi777/git-desc/git"
+	"github.com/miyazi777/git-desc/shell"
 	"github.com/spf13/cobra"
 )
 
@@ -13,11 +13,11 @@ var infoCmd = &cobra.Command{
 	Short: "Information current branch descrpition.",
 	Long:  "Information current branch descrpition.",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		branchName, err := git.GetCurrentBranch()
+		branchName, err := shell.GetCurrentBranch()
 		if err != nil {
 			return err
 		}
-		description, err := git.GetDesctiption(branchName)
+		description, err := shell.GetDesctiption(branchName)
 		if err != nil {
 			return err
 		}

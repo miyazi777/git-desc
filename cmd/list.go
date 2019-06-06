@@ -6,8 +6,7 @@ import (
 
 	"github.com/InVisionApp/tabular"
 	"github.com/mattn/go-runewidth"
-	"github.com/miyazi777/git-desc/git"
-	"github.com/miyazi777/git-desc/terminal"
+	"github.com/miyazi777/git-desc/shell"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -25,12 +24,12 @@ func init() {
 }
 
 func execute(cmd *cobra.Command, args []string) error {
-	descriptionMap, err := git.BuildDescriptionMap()
+	descriptionMap, err := shell.BuildDescriptionMap()
 	if err != nil {
 		return err
 	}
 
-	width, err := terminal.GetWidth()
+	width, err := shell.GetWidth()
 
 	branchWidthPer, err := getPercentConfig("list.branch.width")
 	if err != nil {

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/spf13/cobra"
 
-	"github.com/miyazi777/git-desc/git"
+	"github.com/miyazi777/git-desc/shell"
 )
 
 // setCmd represents the set command
@@ -19,11 +19,11 @@ var setCmd = &cobra.Command{
 		return nil
 	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		branchName, err := git.GetCurrentBranch()
+		branchName, err := shell.GetCurrentBranch()
 		if err != nil {
 			return err
 		}
-		git.SetDescription(branchName, args[0])
+		shell.SetDescription(branchName, args[0])
 		return nil
 	},
 }
