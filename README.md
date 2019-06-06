@@ -8,8 +8,14 @@ go get github.com/miyazi777/git-desc
 
 ## Usage
 ### 現在のブランチに説明を追加
+以下のコマンドで環境変数$EDITORに設定されているエディタが起動し、編集したテキストが現在のブランチの説明になります。
 ```
-git-desc set "説明"
+git-desc set
+```
+
+また、-mオプションを付けることでエディタを起動せず、説明を設定できます。
+```
+git-desc set -m "branch description"
 ```
 
 ### 現在のブランチの説明を表示
