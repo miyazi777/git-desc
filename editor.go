@@ -8,8 +8,9 @@ import (
 )
 
 func main() {
-	initFileErr := initFile("/tmp/git-desc.txt", "test test test")
-	if initFileErr != nil {
+	var err error
+	err = initFile("/tmp/git-desc.txt", "test xxx")
+	if err != nil {
 		fmt.Println("Initialize temp file error")
 		return
 	}
@@ -20,21 +21,28 @@ func main() {
 		return
 	}
 
-	cmd := exec.Command(editor, "/tmp/git-desc.txt")
+	err = executeEditor(editor, "/tmp/git-desc.txt")
+	if err != nil {
+		return
+	}
+}
+
+func executeEditor(editor string, filePath string) error {
+	cmd := exec.Command(editor, filePath)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	cmdErr := cmd.Run()
-	if cmdErr != nil {
-		fmt.Println("Can't started editor.")
-		return
+	err := cmd.Run()
+	if err != nil {
+		return errors.New("Can't started editor.")
 	}
+	return nil
 }
 
 func initFile(filePath string, initMessage string) error {
 	file, err := os.Create(filePath)
 	if err != nil {
-		return errors.New("File open error: ")
+		return errors.New("File open error: " + filePath)
 	}
 
 	defer file.Close()
