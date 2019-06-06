@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"github.com/spf13/cobra"
 
 	"github.com/miyazi777/git-desc/shell"
@@ -22,7 +21,17 @@ var setCmd = &cobra.Command{
 		var text string
 		text, _ = cmd.PersistentFlags().GetString("message")
 		if text == "" {
-			text, err = shell.EditTextByEditor()
+			branchName, err := shell.GetCurrentBranch()
+			if err != nil {
+				return err
+			}
+
+			description, err := shell.GetDesctiption(branchName)
+			if err != nil {
+				return err
+			}
+
+			text, err = shell.EditTextByEditor(description)
 			if err != nil {
 				return err
 			}

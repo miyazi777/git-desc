@@ -7,13 +7,8 @@ import (
 	"strings"
 )
 
-func EditTextByEditor() (string, error) {
+func EditTextByEditor(initText string) (string, error) {
 	var err error
-
-	initText, err := getFileText("/tmp/git-desc.txt")
-	if err != nil {
-		return "", err
-	}
 
 	err = initFile("/tmp/git-desc.txt", initText)
 	if err != nil {
