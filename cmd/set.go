@@ -1,9 +1,8 @@
 package cmd
 
 import (
-	"github.com/spf13/cobra"
-
 	"github.com/miyazi777/git-desc/shell"
+	"github.com/spf13/cobra"
 )
 
 // setCmd represents the set command
@@ -21,11 +20,6 @@ var setCmd = &cobra.Command{
 		var text string
 		text, _ = cmd.PersistentFlags().GetString("message")
 		if text == "" {
-			branchName, err := shell.GetCurrentBranch()
-			if err != nil {
-				return err
-			}
-
 			description, err := shell.GetDesctiption(branchName)
 			if err != nil {
 				return err

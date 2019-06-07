@@ -17,11 +17,19 @@ var infoCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
+
 		description, err := shell.GetDesctiption(branchName)
 		if err != nil {
 			return err
 		}
-		fmt.Printf("description: %s\n", description)
+
+		page, err := shell.GetPage(branchName)
+		if err != nil {
+			return err
+		}
+
+		fmt.Printf("Description: %s\n", description)
+		fmt.Printf("       Page: %s\n", page)
 		return nil
 	},
 }

@@ -22,6 +22,33 @@ func GetCurrentBranch() (string, error) {
 	return strings.Trim(branchName, "\n"), nil
 }
 
+// ページ取得
+func GetPage(branchName string) (string, error) {
+	key := "branch." + branchName + ".page"
+	cmd := exec.Command("git", "config", "--local", key)
+
+	var stdout bytes.Buffer
+	cmd.Stdout = &stdout
+	err := cmd.Run()
+	if err != nil {
+		return "", errors.New("Not a git repository")
+	}
+
+	page := stdout.String()
+	return strings.Trim(page, "\n"), nil
+}
+
+// ページ追加
+func SetPage(branchName string, page string) error {
+	key := "branch." + branchName + ".page"
+	cmd := exec.Command("git", "config", "--local", key, page)
+	err := cmd.Run()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // 説明追加
 func SetDescription(branchName string, desc string) error {
 	key := "branch." + branchName + ".description"
