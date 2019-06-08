@@ -18,7 +18,7 @@ git-desc set
 git-desc set -m "branch description"
 ```
 
-### 現在のブランチの説明を表示
+### 現在のブランチの説明と関連するwebページのURLを表示
 ```
 git-desc info
 ```
@@ -26,4 +26,20 @@ git-desc info
 ### 全ブランチの説明を表示
 ```
 git-desc list
+```
+
+### 現在のブランチに関連するwebページを登録
+以下のコマンドで環境変数$EDITORに設定されているエディタが起動し、編集したテキストが現在のブランチの関連ページとなります。
+```
+git-desc page set
+```
+
+また、-mオプションを付けることでエディタを起動せず、webページを設定できます。
+```
+git-desc page set -m "web page url"
+```
+
+### 現在のブランチに関連するwebページをブラウザで開く
+```
+git-desc page open
 ```
