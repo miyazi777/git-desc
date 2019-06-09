@@ -1,6 +1,9 @@
 # git-desc
 これはgit branch --edit-descriptionなどでブランチに説明を追加するコマンドの代わりとなるCLIツールです。
 
+## Environment
+現状、macのみで、go getでのインストールのみなので、goもインストールされている必要があります。
+
 ## Install
 ```
 go get github.com/miyazi777/git-desc
