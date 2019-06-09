@@ -6,6 +6,7 @@ import (
 
 	"github.com/InVisionApp/tabular"
 	"github.com/mattn/go-runewidth"
+	"github.com/miyazi777/git-desc/git"
 	"github.com/miyazi777/git-desc/shell"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -24,7 +25,8 @@ func init() {
 }
 
 func execute(cmd *cobra.Command, args []string) error {
-	descriptionMap, err := shell.BuildDescriptionMap()
+	var branch git.Branch
+	descriptionMap, err := branch.DescriptionMap()
 	if err != nil {
 		return err
 	}
