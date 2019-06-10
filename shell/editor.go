@@ -2,6 +2,7 @@ package shell
 
 import (
 	"errors"
+	"github.com/spf13/viper"
 	"os"
 	"os/exec"
 	"strings"
@@ -15,9 +16,9 @@ func EditTextByEditor(initText string) (string, error) {
 		return "", errors.New("Initialize temp file error")
 	}
 
-	editor := os.Getenv("EDITOR")
+	editor := viper.GetString("editor")
 	if editor == "" {
-		return "", errors.New("Please set env $EDITOR.")
+		editor = "vi"
 	}
 
 	err = executeEditor(editor, "/tmp/git-desc.txt")

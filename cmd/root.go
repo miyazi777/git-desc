@@ -75,6 +75,7 @@ func initConfig() {
 
 	if err := viper.ReadInConfig(); err != nil {
 		// setting defaults
+		viper.Set("editor", "vi")
 		viper.Set("list.branch.width", 0.35)
 		viper.Set("list.description.width", 0.55)
 	}
