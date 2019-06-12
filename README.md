@@ -46,3 +46,23 @@ git-desc page set -m "web page url"
 ```
 git-desc page open
 ```
+
+## config
+$HOME/.config/git-desc/config.yamlに設定ファイルを置くと、コマンド実行時にそこから設定を読み込み、設定に沿った動きをします。
+設定内容は以下のとおりです。
+
+|キー|内容|
+|---|---|
+|editor|set, page setコマンドを実行した時に起動するエディタ|
+|list.branch.width|listコマンドのbranchの表示幅で、ターミナルの表示幅に対して0.0〜1.0でパーセンテージで指定します|
+|list.description.width|listコマンドのdescriptionの表示幅で、ターミナルの表示幅に対して0.0〜1.0でパーセンテージで指定します|
+
+### 設定例
+```
+editor: nvim
+list:
+  branch:
+    width: 0.35
+  description:
+    width: 0.5
+```
