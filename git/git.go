@@ -6,8 +6,10 @@ import (
 	"strings"
 )
 
+var command = shell.SetupCommand()
+
 func GetConfigList() ([]string, error) {
-	result, err := shell.Run("git", "config", "--local", "--list")
+	result, err := command.Run("git", "config", "--local", "--list")
 	if err != nil {
 		return nil, errors.New("Not a git repository")
 	}
@@ -16,7 +18,7 @@ func GetConfigList() ([]string, error) {
 }
 
 func GetCurrentBranch() (string, error) {
-	result, err := shell.Run("git", "symbolic-ref", "--short", "HEAD")
+	result, err := command.Run("git", "symbolic-ref", "--short", "HEAD")
 	if err != nil {
 		return "", errors.New("Not a git repository")
 	}
@@ -24,7 +26,7 @@ func GetCurrentBranch() (string, error) {
 }
 
 func SetConfigValue(key string, value string) error {
-	_, err := shell.Run("git", "config", "--local", key, value)
+	_, err := command.Run("git", "config", "--local", key, value)
 	if err != nil {
 		return errors.New("Not a git repository")
 	}
@@ -32,7 +34,7 @@ func SetConfigValue(key string, value string) error {
 }
 
 func GetConfigValue(key string) (string, error) {
-	result, err := shell.Run("git", "config", "--local", key)
+	result, err := command.Run("git", "config", "--local", key)
 	if err != nil {
 		return "", errors.New("Not a git repository")
 	}

@@ -6,6 +6,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var command shell.Command
+
 // infoCmd represents the info command
 var pageOpenCmd = &cobra.Command{
 	Use:   "open",
@@ -20,7 +22,7 @@ var pageOpenCmd = &cobra.Command{
 			return err
 		}
 
-		_, err = shell.Run("open", page)
+		_, err = command.Run("open", page)
 		if err != nil {
 			return err
 		}
@@ -31,4 +33,5 @@ var pageOpenCmd = &cobra.Command{
 
 func init() {
 	pageCmd.AddCommand(pageOpenCmd)
+	command = shell.SetupCommand()
 }

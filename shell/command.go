@@ -6,7 +6,17 @@ import (
 	"strings"
 )
 
-func Run(name string, arg ...string) (string, error) {
+type Command interface {
+	Run(name string, arg ...string) (string, error)
+}
+
+type CommandImpl struct{}
+
+func SetupCommand() Command {
+	return CommandImpl{}
+}
+
+func (c CommandImpl) Run(name string, arg ...string) (string, error) {
 	cmd := exec.Command(name, arg...)
 	var stdout bytes.Buffer
 	cmd.Stdout = &stdout
