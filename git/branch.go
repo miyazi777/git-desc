@@ -6,8 +6,10 @@ import (
 
 type Branch struct{}
 
+var git = SetupGit()
+
 func (b Branch) DescriptionMap() (map[string]string, error) {
-	configList, err := GetConfigList()
+	configList, err := git.GetConfigList()
 	if err != nil {
 		return nil, err
 	}
@@ -41,13 +43,13 @@ func extractBranchName(line string) string {
 }
 
 func (b Branch) Description() (string, error) {
-	branchName, err := GetCurrentBranch()
+	branchName, err := git.GetCurrentBranch()
 	if err != nil {
 		return "", err
 	}
 
 	key := buildDescriptionKey(branchName)
-	description, err := GetConfigValue(key)
+	description, err := git.GetConfigValue(key)
 	if err != nil {
 		return "", nil
 	}
@@ -57,13 +59,13 @@ func (b Branch) Description() (string, error) {
 
 func (b Branch) SetDescription(desc string) error {
 	var err error
-	branchName, err := GetCurrentBranch()
+	branchName, err := git.GetCurrentBranch()
 	if err != nil {
 		return err
 	}
 
 	key := buildDescriptionKey(branchName)
-	err = SetConfigValue(key, desc)
+	err = git.SetConfigValue(key, desc)
 	if err != nil {
 		return err
 	}
@@ -76,13 +78,13 @@ func buildDescriptionKey(branchName string) string {
 }
 
 func (b Branch) Page() (string, error) {
-	branchName, err := GetCurrentBranch()
+	branchName, err := git.GetCurrentBranch()
 	if err != nil {
 		return "", err
 	}
 
 	key := buildPageKey(branchName)
-	description, err := GetConfigValue(key)
+	description, err := git.GetConfigValue(key)
 	if err != nil {
 		return "", nil
 	}
@@ -92,13 +94,13 @@ func (b Branch) Page() (string, error) {
 
 func (b Branch) SetPage(desc string) error {
 	var err error
-	branchName, err := GetCurrentBranch()
+	branchName, err := git.GetCurrentBranch()
 	if err != nil {
 		return err
 	}
 
 	key := buildPageKey(branchName)
-	err = SetConfigValue(key, desc)
+	err = git.SetConfigValue(key, desc)
 	if err != nil {
 		return err
 	}

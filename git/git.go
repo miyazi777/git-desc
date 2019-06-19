@@ -8,7 +8,20 @@ import (
 
 var command = shell.SetupCommand()
 
-func GetConfigList() ([]string, error) {
+type Git interface {
+	GetConfigList() ([]string, error)
+	GetCurrentBranch() (string, error)
+	SetConfigValue(key string, value string) error
+	GetConfigValue(key string) (string, error)
+}
+
+type GitImpl struct{}
+
+func SetupGit() Git {
+	return GitImpl{}
+}
+
+func (g GitImpl) GetConfigList() ([]string, error) {
 	result, err := command.Run("git", "config", "--local", "--list")
 	if err != nil {
 		return nil, errors.New("Not a git repository")
@@ -17,7 +30,7 @@ func GetConfigList() ([]string, error) {
 	return strings.Split(result, "\n"), nil
 }
 
-func GetCurrentBranch() (string, error) {
+func (g GitImpl) GetCurrentBranch() (string, error) {
 	result, err := command.Run("git", "symbolic-ref", "--short", "HEAD")
 	if err != nil {
 		return "", errors.New("Not a git repository")
@@ -25,7 +38,7 @@ func GetCurrentBranch() (string, error) {
 	return result, nil
 }
 
-func SetConfigValue(key string, value string) error {
+func (g GitImpl) SetConfigValue(key string, value string) error {
 	_, err := command.Run("git", "config", "--local", key, value)
 	if err != nil {
 		return errors.New("Not a git repository")
@@ -33,7 +46,7 @@ func SetConfigValue(key string, value string) error {
 	return nil
 }
 
-func GetConfigValue(key string) (string, error) {
+func (g GitImpl) GetConfigValue(key string) (string, error) {
 	result, err := command.Run("git", "config", "--local", key)
 	if err != nil {
 		return "", errors.New("Not a git repository")
