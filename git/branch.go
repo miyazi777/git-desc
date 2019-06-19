@@ -1,10 +1,11 @@
 package git
 
 import (
+	"github.com/miyazi777/git-desc/shell"
 	"regexp"
 )
 
-var git = SetupGit()
+var git = SetupGit(shell.NewCommand())
 
 type Branch interface {
 	DescriptionMap() (map[string]string, error)

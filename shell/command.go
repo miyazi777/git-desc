@@ -12,7 +12,7 @@ type Command interface {
 
 type CommandImpl struct{}
 
-func SetupCommand() Command {
+func NewCommand() Command {
 	return CommandImpl{}
 }
 
