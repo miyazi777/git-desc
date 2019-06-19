@@ -4,11 +4,23 @@ import (
 	"regexp"
 )
 
-type Branch struct{}
-
 var git = SetupGit()
 
-func (b Branch) DescriptionMap() (map[string]string, error) {
+type Branch interface {
+	DescriptionMap() (map[string]string, error)
+	Description() (string, error)
+	SetDescription(desc string) error
+	Page() (string, error)
+	SetPage(desc string) error
+}
+
+type BranchImpl struct{}
+
+func SetupBranch() Branch {
+	return BranchImpl{}
+}
+
+func (b BranchImpl) DescriptionMap() (map[string]string, error) {
 	configList, err := git.GetConfigList()
 	if err != nil {
 		return nil, err
@@ -42,7 +54,7 @@ func extractBranchName(line string) string {
 	return reg.ReplaceAllString(line, "")
 }
 
-func (b Branch) Description() (string, error) {
+func (b BranchImpl) Description() (string, error) {
 	branchName, err := git.GetCurrentBranch()
 	if err != nil {
 		return "", err
@@ -57,7 +69,7 @@ func (b Branch) Description() (string, error) {
 	return description, nil
 }
 
-func (b Branch) SetDescription(desc string) error {
+func (b BranchImpl) SetDescription(desc string) error {
 	var err error
 	branchName, err := git.GetCurrentBranch()
 	if err != nil {
@@ -77,7 +89,7 @@ func buildDescriptionKey(branchName string) string {
 	return "branch." + branchName + ".description"
 }
 
-func (b Branch) Page() (string, error) {
+func (b BranchImpl) Page() (string, error) {
 	branchName, err := git.GetCurrentBranch()
 	if err != nil {
 		return "", err
@@ -92,7 +104,7 @@ func (b Branch) Page() (string, error) {
 	return description, nil
 }
 
-func (b Branch) SetPage(desc string) error {
+func (b BranchImpl) SetPage(desc string) error {
 	var err error
 	branchName, err := git.GetCurrentBranch()
 	if err != nil {

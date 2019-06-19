@@ -12,6 +12,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+var branch = git.SetupBranch()
+
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "list",
@@ -25,7 +27,6 @@ func init() {
 }
 
 func execute(cmd *cobra.Command, args []string) error {
-	var branch git.Branch
 	descriptionMap, err := branch.DescriptionMap()
 	if err != nil {
 		return err

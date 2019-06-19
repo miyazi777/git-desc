@@ -15,7 +15,9 @@ type Git interface {
 	GetConfigValue(key string) (string, error)
 }
 
-type GitImpl struct{}
+type GitImpl struct {
+	command shell.Command
+}
 
 func SetupGit() Git {
 	return GitImpl{}
