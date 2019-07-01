@@ -12,7 +12,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var branch = git.SetupBranch()
+var branch = &git.BranchImpl{}
 
 // listCmd represents the list command
 var listCmd = &cobra.Command{
