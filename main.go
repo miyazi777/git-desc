@@ -15,7 +15,15 @@
 package main
 
 import "github.com/miyazi777/git-desc/cmd"
+import "github.com/miyazi777/git-desc/git"
 
 func main() {
+	setup()
 	cmd.Execute()
+}
+
+func setup() {
+	cmd.Branch = &git.BranchImpl{
+		Git: &git.GitImpl{},
+	}
 }

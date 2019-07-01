@@ -4,8 +4,6 @@ import (
 	"regexp"
 )
 
-var git = SetupGit()
-
 type Branch interface {
 	DescriptionMap() (map[string]string, error)
 	Description() (string, error)
@@ -14,10 +12,12 @@ type Branch interface {
 	SetPage(desc string) error
 }
 
-type BranchImpl struct{}
+type BranchImpl struct {
+	Git Git
+}
 
 func (b *BranchImpl) DescriptionMap() (map[string]string, error) {
-	configList, err := git.GetConfigList()
+	configList, err := b.Git.GetConfigList()
 	if err != nil {
 		return nil, err
 	}
@@ -51,13 +51,13 @@ func extractBranchName(line string) string {
 }
 
 func (b *BranchImpl) Description() (string, error) {
-	branchName, err := git.GetCurrentBranch()
+	branchName, err := b.Git.GetCurrentBranch()
 	if err != nil {
 		return "", err
 	}
 
 	key := buildDescriptionKey(branchName)
-	description, err := git.GetConfigValue(key)
+	description, err := b.Git.GetConfigValue(key)
 	if err != nil {
 		return "", nil
 	}
@@ -67,13 +67,13 @@ func (b *BranchImpl) Description() (string, error) {
 
 func (b *BranchImpl) SetDescription(desc string) error {
 	var err error
-	branchName, err := git.GetCurrentBranch()
+	branchName, err := b.Git.GetCurrentBranch()
 	if err != nil {
 		return err
 	}
 
 	key := buildDescriptionKey(branchName)
-	err = git.SetConfigValue(key, desc)
+	err = b.Git.SetConfigValue(key, desc)
 	if err != nil {
 		return err
 	}
@@ -86,13 +86,13 @@ func buildDescriptionKey(branchName string) string {
 }
 
 func (b *BranchImpl) Page() (string, error) {
-	branchName, err := git.GetCurrentBranch()
+	branchName, err := b.Git.GetCurrentBranch()
 	if err != nil {
 		return "", err
 	}
 
 	key := buildPageKey(branchName)
-	description, err := git.GetConfigValue(key)
+	description, err := b.Git.GetConfigValue(key)
 	if err != nil {
 		return "", nil
 	}
@@ -102,13 +102,13 @@ func (b *BranchImpl) Page() (string, error) {
 
 func (b *BranchImpl) SetPage(desc string) error {
 	var err error
-	branchName, err := git.GetCurrentBranch()
+	branchName, err := b.Git.GetCurrentBranch()
 	if err != nil {
 		return err
 	}
 
 	key := buildPageKey(branchName)
-	err = git.SetConfigValue(key, desc)
+	err = b.Git.SetConfigValue(key, desc)
 	if err != nil {
 		return err
 	}

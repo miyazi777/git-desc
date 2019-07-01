@@ -12,7 +12,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var branch = &git.BranchImpl{}
+var Branch git.Branch
 
 // listCmd represents the list command
 var listCmd = &cobra.Command{
@@ -27,7 +27,7 @@ func init() {
 }
 
 func execute(cmd *cobra.Command, args []string) error {
-	descriptionMap, err := branch.DescriptionMap()
+	descriptionMap, err := Branch.DescriptionMap()
 	if err != nil {
 		return err
 	}
