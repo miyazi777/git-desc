@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/miyazi777/git-desc/git"
 	"github.com/spf13/cobra"
 )
 
@@ -13,7 +12,6 @@ var infoCmd = &cobra.Command{
 	Short: "Information current branch descrpition.",
 	Long:  "Information current branch descrpition.",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var branch git.Branch
 		description, err := branch.Description()
 		if err != nil {
 			return err

@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"github.com/miyazi777/git-desc/git"
 	"github.com/miyazi777/git-desc/shell"
 	"github.com/spf13/cobra"
 )
@@ -13,7 +12,6 @@ var setCmd = &cobra.Command{
 	Long:  `Set current branch description.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var err error
-		var branch git.Branch
 
 		var text string
 		text, _ = cmd.PersistentFlags().GetString("message")

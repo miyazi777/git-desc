@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"github.com/miyazi777/git-desc/git"
 	"github.com/miyazi777/git-desc/shell"
 	"github.com/spf13/cobra"
 )
@@ -12,8 +11,6 @@ var pageSetCmd = &cobra.Command{
 	Short: "Page set command.",
 	Long:  "Page set command.",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var branch git.Branch
-
 		var text string
 		text, _ = cmd.PersistentFlags().GetString("page")
 		if text == "" {

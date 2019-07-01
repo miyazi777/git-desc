@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"github.com/miyazi777/git-desc/git"
 	"github.com/miyazi777/git-desc/shell"
 	"github.com/spf13/cobra"
 )
@@ -15,7 +14,6 @@ var pageOpenCmd = &cobra.Command{
 	Long:  "Page open command.",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var err error
-		var branch git.Branch
 
 		page, err := branch.Page()
 		if err != nil {

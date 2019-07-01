@@ -6,13 +6,10 @@ import (
 
 	"github.com/InVisionApp/tabular"
 	"github.com/mattn/go-runewidth"
-	"github.com/miyazi777/git-desc/git"
 	"github.com/miyazi777/git-desc/shell"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
-
-var Branch git.Branch
 
 // listCmd represents the list command
 var listCmd = &cobra.Command{
@@ -27,7 +24,7 @@ func init() {
 }
 
 func execute(cmd *cobra.Command, args []string) error {
-	descriptionMap, err := Branch.DescriptionMap()
+	descriptionMap, err := branch.DescriptionMap()
 	if err != nil {
 		return err
 	}

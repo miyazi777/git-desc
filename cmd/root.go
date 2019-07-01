@@ -19,10 +19,13 @@ import (
 	"os"
 
 	homedir "github.com/mitchellh/go-homedir"
+	"github.com/miyazi777/git-desc/git"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"path/filepath"
 )
+
+var branch git.Branch
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -51,6 +54,7 @@ func Execute() {
 }
 
 func init() {
+	setup()
 	cobra.OnInitialize(initConfig)
 
 	// Here you will define your flags and configuration settings.
@@ -78,5 +82,11 @@ func initConfig() {
 		viper.Set("editor", "vi")
 		viper.Set("list.branch.width", 0.35)
 		viper.Set("list.description.width", 0.55)
+	}
+}
+
+func setup() {
+	branch = &git.BranchImpl{
+		Git: &git.GitImpl{},
 	}
 }
