@@ -20,6 +20,7 @@ import (
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/miyazi777/git-desc/git"
+	"github.com/miyazi777/git-desc/shell"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"path/filepath"
@@ -87,6 +88,8 @@ func initConfig() {
 
 func setup() {
 	branch = &git.BranchImpl{
-		Git: &git.GitImpl{},
+		Git: &git.GitImpl{
+			Command: &shell.CommandImpl{},
+		},
 	}
 }

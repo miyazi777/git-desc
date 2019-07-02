@@ -31,5 +31,5 @@ var pageOpenCmd = &cobra.Command{
 
 func init() {
 	pageCmd.AddCommand(pageOpenCmd)
-	command = shell.SetupCommand()
+	command = shell.CommandImpl{}
 }

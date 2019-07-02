@@ -6,8 +6,6 @@ import (
 	"strings"
 )
 
-var command = shell.SetupCommand()
-
 type Git interface {
 	GetConfigList() ([]string, error)
 	GetCurrentBranch() (string, error)
@@ -16,15 +14,11 @@ type Git interface {
 }
 
 type GitImpl struct {
-	command shell.Command
-}
-
-func SetupGit() Git {
-	return GitImpl{}
+	Command shell.Command
 }
 
 func (g GitImpl) GetConfigList() ([]string, error) {
-	result, err := command.Run("git", "config", "--local", "--list")
+	result, err := g.Command.Run("git", "config", "--local", "--list")
 	if err != nil {
 		return nil, errors.New("Not a git repository")
 	}
@@ -33,7 +27,7 @@ func (g GitImpl) GetConfigList() ([]string, error) {
 }
 
 func (g GitImpl) GetCurrentBranch() (string, error) {
-	result, err := command.Run("git", "symbolic-ref", "--short", "HEAD")
+	result, err := g.Command.Run("git", "symbolic-ref", "--short", "HEAD")
 	if err != nil {
 		return "", errors.New("Not a git repository")
 	}
@@ -41,7 +35,7 @@ func (g GitImpl) GetCurrentBranch() (string, error) {
 }
 
 func (g GitImpl) SetConfigValue(key string, value string) error {
-	_, err := command.Run("git", "config", "--local", key, value)
+	_, err := g.Command.Run("git", "config", "--local", key, value)
 	if err != nil {
 		return errors.New("Not a git repository")
 	}
@@ -49,7 +43,7 @@ func (g GitImpl) SetConfigValue(key string, value string) error {
 }
 
 func (g GitImpl) GetConfigValue(key string) (string, error) {
-	result, err := command.Run("git", "config", "--local", key)
+	result, err := g.Command.Run("git", "config", "--local", key)
 	if err != nil {
 		return "", errors.New("Not a git repository")
 	}

@@ -12,10 +12,6 @@ type Command interface {
 
 type CommandImpl struct{}
 
-func SetupCommand() Command {
-	return CommandImpl{}
-}
-
 func (c CommandImpl) Run(name string, arg ...string) (string, error) {
 	cmd := exec.Command(name, arg...)
 	var stdout bytes.Buffer
