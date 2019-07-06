@@ -11,7 +11,7 @@ func TestRunCommandSuccess(t *testing.T) {
 	cmd := CommandImpl{}
 	result, err := cmd.Run("echo", "'test'")
 	assert.Equal(result, "'test'")
-	assert.Nil(err)
+	assert.NoError(err)
 }
 
 func TestRunCommandFailed(t *testing.T) {
