@@ -5,6 +5,7 @@ import (
 	"testing"
 )
 
+// コマンドが成功した時のテストケース
 func TestRunCommandSuccess(t *testing.T) {
 	assert := assert.New(t)
 
@@ -14,6 +15,7 @@ func TestRunCommandSuccess(t *testing.T) {
 	assert.NoError(err)
 }
 
+// コマンドが失敗した時のテストケース
 func TestRunCommandFailed(t *testing.T) {
 	assert := assert.New(t)
 
