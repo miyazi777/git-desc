@@ -31,6 +31,8 @@ git-desc info
 git-desc list
 ```
 
+また、--only-listオプションを付けることでリストのみを表示します。
+
 ### 現在のブランチに関連するwebページを登録
 以下のコマンドで環境変数$EDITORに設定されているエディタが起動し、編集したテキストが現在のブランチの関連ページとなります。
 ```
@@ -54,15 +56,8 @@ $HOME/.config/git-desc/config.yamlに設定ファイルを置くと、コマン�
 |キー|内容|
 |---|---|
 |editor|set, page setコマンドを実行した時に起動するエディタ|
-|list.branch.width|listコマンドのbranchの表示幅で、ターミナルの表示幅に対して0.0〜1.0でパーセンテージで指定します|
-|list.description.width|listコマンドのdescriptionの表示幅で、ターミナルの表示幅に対して0.0〜1.0でパーセンテージで指定します|
 
 ### 設定例
 ```
 editor: nvim
-list:
-  branch:
-    width: 0.35
-  description:
-    width: 0.5
 ```

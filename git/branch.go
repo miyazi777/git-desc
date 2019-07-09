@@ -2,42 +2,52 @@ package git
 
 import (
 	"regexp"
+	"sort"
 )
 
 type Branch interface {
-	DescriptionMap() (map[string]string, error)
+	DescriptionList() ([]BranchInfo, error)
 	Description() (string, error)
 	SetDescription(desc string) error
 	Page() (string, error)
 	SetPage(desc string) error
 }
 
+type BranchInfo struct {
+	Branch      string
+	Description string
+}
+
 type BranchImpl struct {
 	Git Git
 }
 
-func (b *BranchImpl) DescriptionMap() (map[string]string, error) {
+func (b *BranchImpl) DescriptionList() ([]BranchInfo, error) {
 	configList, err := b.Git.GetConfigList()
 	if err != nil {
 		return nil, err
 	}
 
-	descMap := buildDescriptionMap(configList)
-	return descMap, nil
+	descList := buildDescriptionList(configList)
+	return descList, nil
 }
 
-func buildDescriptionMap(configList []string) map[string]string {
+func buildDescriptionList(configList []string) []BranchInfo {
+
+	sort.Strings(configList)
+
+	var descList []BranchInfo
 	descLineReg := regexp.MustCompile(`^branch.*description=`)
-	descMap := make(map[string]string)
 	for _, configLine := range configList {
 		if descLineReg.MatchString(configLine) {
-			desc := extractDescription(configLine)
-			branchName := extractBranchName(configLine)
-			descMap[branchName] = desc
+			info := BranchInfo{
+				Branch:      extractBranchName(configLine),
+				Description: extractDescription(configLine),
+			}
+			descList = append(descList, info)
 		}
 	}
-
-	return descMap
+	return descList
 }
 
 func extractDescription(line string) string {

@@ -19,7 +19,7 @@ func init() {
 }
 
 func execute(cmd *cobra.Command, args []string) error {
-	descriptionMap, err := branch.DescriptionMap()
+	descList, err := branch.DescriptionList()
 	if err != nil {
 		return err
 	}
@@ -30,8 +30,8 @@ func execute(cmd *cobra.Command, args []string) error {
 		t.AddHeader("BRANCH", "DESCRIPTION")
 	}
 
-	for branchName, description := range descriptionMap {
-		t.AddLine(branchName, description)
+	for _, info := range descList {
+		t.AddLine(info.Branch, info.Description)
 	}
 	t.Print()
 	return nil
