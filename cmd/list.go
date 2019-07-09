@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"errors"
-	"fmt"
-
-	"github.com/InVisionApp/tabular"
+	//"fmt"
+	"github.com/cheynewallace/tabby"
+	//"github.com/InVisionApp/tabular"
 	"github.com/mattn/go-runewidth"
 	"github.com/miyazi777/git-desc/shell"
 	"github.com/spf13/cobra"
@@ -20,6 +20,7 @@ var listCmd = &cobra.Command{
 }
 
 func init() {
+	listCmd.PersistentFlags().BoolP("only-list", "", false, "display list only")
 	rootCmd.AddCommand(listCmd)
 }
 
@@ -44,14 +45,16 @@ func execute(cmd *cobra.Command, args []string) error {
 	branchWidth := int(float64(width) * branchWidthPer)
 	descWidth := int(float64(width) * descWidthPer)
 
-	tab := tabular.New()
-	tab.Col("branch", "Branch", branchWidth)
-	tab.Col("desc", "Description", descWidth)
-	format := tab.Print("*")
+	onlyListFlg, _ := cmd.PersistentFlags().GetBool("only-list")
+	t := tabby.New()
+	if !onlyListFlg {
+		t.AddHeader("BRANCH", "DESCRIPTION")
+	}
 
 	for branchName, description := range descriptionMap {
-		fmt.Printf(format, runewidth.Truncate(branchName, branchWidth, "..."), runewidth.Truncate(description, descWidth, "..."))
+		t.AddLine(runewidth.Truncate(branchName, branchWidth, "..."), runewidth.Truncate(description, descWidth, "..."))
 	}
+	t.Print()
 	return nil
 }
 
