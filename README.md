@@ -49,6 +49,12 @@ git-desc page set -m "web page url"
 git-desc page open
 ```
 
+### 現在のブランチの説明と関連するwebページを削除
+以下のコマンドで現在のブランチの説明と関連webページに関する情報を削除します。
+```
+git-desc delete
+```
+
 ## config
 $HOME/.config/git-desc/config.yamlに設定ファイルを置くと、コマンド実行時にそこから設定を読み込み、設定に沿った動きをします。
 設定内容は以下のとおりです。
