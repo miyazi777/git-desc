@@ -11,6 +11,7 @@ type Git interface {
 	GetCurrentBranch() (string, error)
 	SetConfigValue(key string, value string) error
 	GetConfigValue(key string) (string, error)
+	DeleteConfigValue(key string) error
 }
 
 type GitImpl struct {
@@ -48,4 +49,18 @@ func (g GitImpl) GetConfigValue(key string) (string, error) {
 		return "", errors.New("Not a git repository")
 	}
 	return result, nil
+}
+
+func (g GitImpl) DeleteConfigValue(key string) error {
+	var err error
+	result, err := g.Command.Run("git", "config", key)
+	if result == "" {
+		return nil
+	}
+
+	_, err = g.Command.Run("git", "config", "--unset", key)
+	if err != nil {
+		return errors.New("Not a git repository")
+	}
+	return nil
 }

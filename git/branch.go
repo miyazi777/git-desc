@@ -11,6 +11,7 @@ type Branch interface {
 	SetDescription(desc string) error
 	Page() (string, error)
 	SetPage(desc string) error
+	DeleteConfig() error
 }
 
 type BranchInfo struct {
@@ -128,4 +129,26 @@ func (b *BranchImpl) SetPage(desc string) error {
 
 func buildPageKey(branchName string) string {
 	return "branch." + branchName + ".page"
+}
+
+func (b *BranchImpl) DeleteConfig() error {
+	var err error
+	branchName, err := b.Git.GetCurrentBranch()
+	if err != nil {
+		return err
+	}
+
+	descKey := buildDescriptionKey(branchName)
+	err = b.Git.DeleteConfigValue(descKey)
+	if err != nil {
+		return err
+	}
+
+	pageKey := buildPageKey(branchName)
+	err = b.Git.DeleteConfigValue(pageKey)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
