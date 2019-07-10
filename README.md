@@ -71,7 +71,7 @@ fzfを使用しているのであれば、以下のようなスクリプトを.b
 bl() {
   branches=$(git-desc list --only-list) &&
   select_line=$(echo "$branches" | fzf +m)
-  git checkout $(echo ${1} | cut -d" " -f 1)
+  git checkout $(echo ${select_line} | cut -d" " -f 1)
 }
 ```
 
