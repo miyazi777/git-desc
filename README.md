@@ -61,3 +61,18 @@ $HOME/.config/git-desc/config.yamlに設定ファイルを置くと、コマン�
 ```
 editor: nvim
 ```
+
+# fzfとの連携例
+fzfを使用しているのであれば、以下のようなスクリプトを.bashrcや.zshrcに記述することでブランチを確認しながら、移動することができます。
+以下のスクリプトではターミナルでblと打ち込むとこのツールのlistからブランチを選択し、移動することが出来ます。
+
+```zsh
+# git desc setting
+bl() {
+  branches=$(git-desc list --only-list) &&
+  select_line=$(echo "$branches" | fzf +m)
+  git checkout $(echo ${1} | cut -d" " -f 1)
+}
+```
+
+
