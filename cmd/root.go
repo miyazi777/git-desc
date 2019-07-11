@@ -27,6 +27,7 @@ import (
 )
 
 var branch git.Branch
+var config git.Config
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -88,6 +89,11 @@ func initConfig() {
 
 func setup() {
 	branch = &git.BranchImpl{
+		Git: &git.GitImpl{
+			Command: &shell.CommandImpl{},
+		},
+	}
+	config = &git.ConfigImpl{
 		Git: &git.GitImpl{
 			Command: &shell.CommandImpl{},
 		},

@@ -1,12 +1,6 @@
 package git
 
-import (
-	"regexp"
-	"sort"
-)
-
 type Branch interface {
-	DescriptionList() ([]BranchInfo, error)
 	Description() (string, error)
 	SetDescription(desc string) error
 	Page() (string, error)
@@ -21,44 +15,6 @@ type BranchInfo struct {
 
 type BranchImpl struct {
 	Git Git
-}
-
-func (b *BranchImpl) DescriptionList() ([]BranchInfo, error) {
-	configList, err := b.Git.GetConfigList()
-	if err != nil {
-		return nil, err
-	}
-
-	descList := buildDescriptionList(configList)
-	return descList, nil
-}
-
-func buildDescriptionList(configList []string) []BranchInfo {
-
-	sort.Strings(configList)
-
-	var descList []BranchInfo
-	descLineReg := regexp.MustCompile(`^branch.*description=`)
-	for _, configLine := range configList {
-		if descLineReg.MatchString(configLine) {
-			info := BranchInfo{
-				Branch:      extractBranchName(configLine),
-				Description: extractDescription(configLine),
-			}
-			descList = append(descList, info)
-		}
-	}
-	return descList
-}
-
-func extractDescription(line string) string {
-	descReg := regexp.MustCompile(`^branch.*description=`)
-	return descReg.ReplaceAllString(line, "")
-}
-
-func extractBranchName(line string) string {
-	reg := regexp.MustCompile(`(branch\.|\.description|=.+)`)
-	return reg.ReplaceAllString(line, "")
 }
 
 func (b *BranchImpl) Description() (string, error) {
