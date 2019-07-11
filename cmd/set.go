@@ -16,18 +16,18 @@ var setCmd = &cobra.Command{
 		var text string
 		text, _ = cmd.PersistentFlags().GetString("message")
 		if text == "" {
-			description, err := branch.Description()
+			desc, err := description.Get()
 			if err != nil {
 				return err
 			}
 
-			text, err = shell.EditTextByEditor(description)
+			text, err = shell.EditTextByEditor(desc)
 			if err != nil {
 				return err
 			}
 		}
 
-		err = branch.SetDescription(text)
+		err = description.Set(text)
 		return err
 	},
 }

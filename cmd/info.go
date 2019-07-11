@@ -12,7 +12,8 @@ var infoCmd = &cobra.Command{
 	Short: "Information current branch descrpition.",
 	Long:  "Information current branch descrpition.",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		description, err := branch.Description()
+
+		desc, err := description.Get()
 		if err != nil {
 			return err
 		}
@@ -22,7 +23,7 @@ var infoCmd = &cobra.Command{
 			return err
 		}
 
-		fmt.Printf("Description: %s\n", description)
+		fmt.Printf("Description: %s\n", desc)
 		fmt.Printf("       Page: %s\n", page)
 		return nil
 	},

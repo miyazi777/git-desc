@@ -18,8 +18,8 @@ type ConfigImpl struct {
 	Git Git
 }
 
-func (b *ConfigImpl) ConfigList() ([]ConfigInfo, error) {
-	configLineList, err := b.Git.GetConfigList()
+func (c *ConfigImpl) ConfigList() ([]ConfigInfo, error) {
+	configLineList, err := c.Git.GetConfigList()
 	if err != nil {
 		return nil, err
 	}
