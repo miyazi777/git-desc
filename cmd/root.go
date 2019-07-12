@@ -90,19 +90,19 @@ func initConfig() {
 }
 
 func setup() {
+	command := &shell.CommandImpl{}
+
+	git := &git.GitImpl{
+		Command: command,
+	}
+
 	gitConfig = &config.ConfigImpl{
-		Git: &git.GitImpl{
-			Command: &shell.CommandImpl{},
-		},
+		Git: git,
 	}
 	description = &config.DescriptionImpl{
-		Git: &git.GitImpl{
-			Command: &shell.CommandImpl{},
-		},
+		Git: git,
 	}
 	page = &config.PageImpl{
-		Git: &git.GitImpl{
-			Command: &shell.CommandImpl{},
-		},
+		Git: git,
 	}
 }
