@@ -7,6 +7,7 @@ import (
 type Description interface {
 	Get() (string, error)
 	Set(desc string) error
+	DeleteDescription() error
 }
 
 type DescriptionImpl struct {
@@ -19,7 +20,7 @@ func (d *DescriptionImpl) Get() (string, error) {
 		return "", err
 	}
 
-	key := BuildDescriptionKey(branchName)
+	key := buildDescriptionKey(branchName)
 	desc, err := d.Git.GetConfigValue(key)
 	if err != nil {
 		return "", nil
@@ -35,7 +36,7 @@ func (d *DescriptionImpl) Set(desc string) error {
 		return err
 	}
 
-	key := BuildDescriptionKey(branchName)
+	key := buildDescriptionKey(branchName)
 	err = d.Git.SetConfigValue(key, desc)
 	if err != nil {
 		return err
@@ -44,6 +45,22 @@ func (d *DescriptionImpl) Set(desc string) error {
 	return nil
 }
 
-func BuildDescriptionKey(branchName string) string {
+func (d *DescriptionImpl) DeleteDescription() error {
+	var err error
+	branchName, err := d.Git.GetCurrentBranch()
+	if err != nil {
+		return err
+	}
+
+	descKey := buildDescriptionKey(branchName)
+	err = d.Git.DeleteConfigValue(descKey)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func buildDescriptionKey(branchName string) string {
 	return "branch." + branchName + ".description"
 }

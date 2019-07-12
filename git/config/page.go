@@ -7,6 +7,7 @@ import (
 type Page interface {
 	Get() (string, error)
 	Set(page string) error
+	DeletePage() error
 }
 
 type PageImpl struct {
@@ -37,6 +38,22 @@ func (p *PageImpl) Set(page string) error {
 
 	key := BuildPageKey(branchName)
 	err = p.Git.SetConfigValue(key, page)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (p *PageImpl) DeletePage() error {
+	var err error
+	branchName, err := p.Git.GetCurrentBranch()
+	if err != nil {
+		return err
+	}
+
+	pageKey := BuildPageKey(branchName)
+	err = p.Git.DeleteConfigValue(pageKey)
 	if err != nil {
 		return err
 	}

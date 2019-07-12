@@ -10,7 +10,13 @@ var deleteCmd = &cobra.Command{
 	Short: "Delete current branch descrpition.",
 	Long:  "Delete current branch descrpition.",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := gitConfig.DeleteConfig()
+		var err error
+		err = description.DeleteDescription()
+		if err != nil {
+			return err
+		}
+
+		err = page.DeletePage()
 		if err != nil {
 			return err
 		}
