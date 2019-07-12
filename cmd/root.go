@@ -20,7 +20,7 @@ import (
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/miyazi777/git-desc/git"
-	gitConfig "github.com/miyazi777/git-desc/git/config"
+	conf "github.com/miyazi777/git-desc/git/config"
 	"github.com/miyazi777/git-desc/shell"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -28,8 +28,8 @@ import (
 )
 
 var branch git.Branch
-var config git.Config
-var description gitConfig.Description
+var gitConfig git.Config
+var description conf.Description
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -95,12 +95,12 @@ func setup() {
 			Command: &shell.CommandImpl{},
 		},
 	}
-	config = &git.ConfigImpl{
+	gitConfig = &git.ConfigImpl{
 		Git: &git.GitImpl{
 			Command: &shell.CommandImpl{},
 		},
 	}
-	description = &gitConfig.DescriptionImpl{
+	description = &conf.DescriptionImpl{
 		Git: &git.GitImpl{
 			Command: &shell.CommandImpl{},
 		},

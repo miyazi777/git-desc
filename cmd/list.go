@@ -19,7 +19,7 @@ func init() {
 }
 
 func execute(cmd *cobra.Command, args []string) error {
-	configList, err := config.ConfigList()
+	configList, err := gitConfig.ConfigList()
 	if err != nil {
 		return err
 	}
