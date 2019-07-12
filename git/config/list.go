@@ -6,20 +6,20 @@ import (
 	"sort"
 )
 
-type Config interface {
-	ConfigList() ([]ConfigInfo, error)
-}
-
 type ConfigInfo struct {
 	Branch      string
 	Description string
 }
 
-type ConfigImpl struct {
+type List interface {
+	GetConfigList() ([]ConfigInfo, error)
+}
+
+type ListImpl struct {
 	Git git.Git
 }
 
-func (c *ConfigImpl) ConfigList() ([]ConfigInfo, error) {
+func (c *ListImpl) GetConfigList() ([]ConfigInfo, error) {
 	configLineList, err := c.Git.GetConfigList()
 	if err != nil {
 		return nil, err

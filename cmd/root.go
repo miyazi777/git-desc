@@ -27,7 +27,7 @@ import (
 	"path/filepath"
 )
 
-var gitConfig config.Config
+var configList config.List
 var description config.Description
 var page config.Page
 
@@ -95,8 +95,7 @@ func setup() {
 	git := &git.GitImpl{
 		Command: command,
 	}
-
-	gitConfig = &config.ConfigImpl{
+	configList = &config.ListImpl{
 		Git: git,
 	}
 	description = &config.DescriptionImpl{
