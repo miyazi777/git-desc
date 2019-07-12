@@ -18,7 +18,7 @@ var infoCmd = &cobra.Command{
 			return err
 		}
 
-		page, err := branch.Page()
+		page, err := page.Get()
 		if err != nil {
 			return err
 		}
