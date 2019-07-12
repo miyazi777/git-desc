@@ -1,6 +1,7 @@
-package git
+package config
 
 import (
+	"github.com/miyazi777/git-desc/git"
 	"regexp"
 	"sort"
 )
@@ -16,7 +17,7 @@ type ConfigInfo struct {
 }
 
 type ConfigImpl struct {
-	Git Git
+	Git git.Git
 }
 
 func (c *ConfigImpl) ConfigList() ([]ConfigInfo, error) {
@@ -76,12 +77,4 @@ func (b *ConfigImpl) DeleteConfig() error {
 	}
 
 	return nil
-}
-
-func BuildDescriptionKey(branchName string) string {
-	return "branch." + branchName + ".description"
-}
-
-func BuildPageKey(branchName string) string {
-	return "branch." + branchName + ".page"
 }

@@ -20,16 +20,16 @@ import (
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/miyazi777/git-desc/git"
-	conf "github.com/miyazi777/git-desc/git/config"
+	config "github.com/miyazi777/git-desc/git/config"
 	"github.com/miyazi777/git-desc/shell"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"path/filepath"
 )
 
-var gitConfig git.Config
-var description conf.Description
-var page conf.Page
+var gitConfig config.Config
+var description config.Description
+var page config.Page
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -90,17 +90,17 @@ func initConfig() {
 }
 
 func setup() {
-	gitConfig = &git.ConfigImpl{
+	gitConfig = &config.ConfigImpl{
 		Git: &git.GitImpl{
 			Command: &shell.CommandImpl{},
 		},
 	}
-	description = &conf.DescriptionImpl{
+	description = &config.DescriptionImpl{
 		Git: &git.GitImpl{
 			Command: &shell.CommandImpl{},
 		},
 	}
-	page = &conf.PageImpl{
+	page = &config.PageImpl{
 		Git: &git.GitImpl{
 			Command: &shell.CommandImpl{},
 		},
