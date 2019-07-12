@@ -11,17 +11,17 @@ type Page interface {
 }
 
 type PageImpl struct {
-	Git git.Git
+	Command git.Command
 }
 
 func (p *PageImpl) Get() (string, error) {
-	branchName, err := p.Git.GetCurrentBranch()
+	branchName, err := p.Command.GetCurrentBranch()
 	if err != nil {
 		return "", err
 	}
 
 	key := BuildPageKey(branchName)
-	description, err := p.Git.GetConfigValue(key)
+	description, err := p.Command.GetConfigValue(key)
 	if err != nil {
 		return "", nil
 	}
@@ -31,13 +31,13 @@ func (p *PageImpl) Get() (string, error) {
 
 func (p *PageImpl) Set(page string) error {
 	var err error
-	branchName, err := p.Git.GetCurrentBranch()
+	branchName, err := p.Command.GetCurrentBranch()
 	if err != nil {
 		return err
 	}
 
 	key := BuildPageKey(branchName)
-	err = p.Git.SetConfigValue(key, page)
+	err = p.Command.SetConfigValue(key, page)
 	if err != nil {
 		return err
 	}
@@ -47,13 +47,13 @@ func (p *PageImpl) Set(page string) error {
 
 func (p *PageImpl) DeletePage() error {
 	var err error
-	branchName, err := p.Git.GetCurrentBranch()
+	branchName, err := p.Command.GetCurrentBranch()
 	if err != nil {
 		return err
 	}
 
 	pageKey := BuildPageKey(branchName)
-	err = p.Git.DeleteConfigValue(pageKey)
+	err = p.Command.DeleteConfigValue(pageKey)
 	if err != nil {
 		return err
 	}

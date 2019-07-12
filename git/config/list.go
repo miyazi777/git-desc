@@ -16,11 +16,11 @@ type List interface {
 }
 
 type ListImpl struct {
-	Git git.Git
+	Command git.Command
 }
 
 func (c *ListImpl) GetConfigList() ([]ConfigInfo, error) {
-	configLineList, err := c.Git.GetConfigList()
+	configLineList, err := c.Command.GetConfigList()
 	if err != nil {
 		return nil, err
 	}

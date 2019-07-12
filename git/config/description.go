@@ -11,17 +11,17 @@ type Description interface {
 }
 
 type DescriptionImpl struct {
-	Git git.Git
+	Command git.Command
 }
 
 func (d *DescriptionImpl) Get() (string, error) {
-	branchName, err := d.Git.GetCurrentBranch()
+	branchName, err := d.Command.GetCurrentBranch()
 	if err != nil {
 		return "", err
 	}
 
 	key := buildDescriptionKey(branchName)
-	desc, err := d.Git.GetConfigValue(key)
+	desc, err := d.Command.GetConfigValue(key)
 	if err != nil {
 		return "", nil
 	}
@@ -31,13 +31,13 @@ func (d *DescriptionImpl) Get() (string, error) {
 
 func (d *DescriptionImpl) Set(desc string) error {
 	var err error
-	branchName, err := d.Git.GetCurrentBranch()
+	branchName, err := d.Command.GetCurrentBranch()
 	if err != nil {
 		return err
 	}
 
 	key := buildDescriptionKey(branchName)
-	err = d.Git.SetConfigValue(key, desc)
+	err = d.Command.SetConfigValue(key, desc)
 	if err != nil {
 		return err
 	}
@@ -47,13 +47,13 @@ func (d *DescriptionImpl) Set(desc string) error {
 
 func (d *DescriptionImpl) DeleteDescription() error {
 	var err error
-	branchName, err := d.Git.GetCurrentBranch()
+	branchName, err := d.Command.GetCurrentBranch()
 	if err != nil {
 		return err
 	}
 
 	descKey := buildDescriptionKey(branchName)
-	err = d.Git.DeleteConfigValue(descKey)
+	err = d.Command.DeleteConfigValue(descKey)
 	if err != nil {
 		return err
 	}

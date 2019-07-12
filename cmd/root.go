@@ -92,16 +92,16 @@ func initConfig() {
 func setup() {
 	command := &shell.CommandImpl{}
 
-	git := &git.GitImpl{
+	gitCommand := &git.CommandImpl{
 		Command: command,
 	}
 	configList = &config.ListImpl{
-		Git: git,
+		Command: gitCommand,
 	}
 	description = &config.DescriptionImpl{
-		Git: git,
+		Command: gitCommand,
 	}
 	page = &config.PageImpl{
-		Git: git,
+		Command: gitCommand,
 	}
 }
