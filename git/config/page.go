@@ -19,7 +19,7 @@ func (p *PageImpl) Get() (string, error) {
 		return "", err
 	}
 
-	key := buildPageKey(branchName)
+	key := git.BuildPageKey(branchName)
 	description, err := p.Git.GetConfigValue(key)
 	if err != nil {
 		return "", nil
@@ -35,15 +35,11 @@ func (p *PageImpl) Set(page string) error {
 		return err
 	}
 
-	key := buildPageKey(branchName)
+	key := git.BuildPageKey(branchName)
 	err = p.Git.SetConfigValue(key, page)
 	if err != nil {
 		return err
 	}
 
 	return nil
-}
-
-func buildPageKey(branchName string) string {
-	return "branch." + branchName + ".page"
 }

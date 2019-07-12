@@ -7,6 +7,7 @@ import (
 
 type Config interface {
 	ConfigList() ([]ConfigInfo, error)
+	DeleteConfig() error
 }
 
 type ConfigInfo struct {
@@ -53,4 +54,34 @@ func extractDescription(line string) string {
 func extractBranchName(line string) string {
 	reg := regexp.MustCompile(`(branch\.|\.description|=.+)`)
 	return reg.ReplaceAllString(line, "")
+}
+
+func (b *ConfigImpl) DeleteConfig() error {
+	var err error
+	branchName, err := b.Git.GetCurrentBranch()
+	if err != nil {
+		return err
+	}
+
+	descKey := BuildDescriptionKey(branchName)
+	err = b.Git.DeleteConfigValue(descKey)
+	if err != nil {
+		return err
+	}
+
+	pageKey := BuildPageKey(branchName)
+	err = b.Git.DeleteConfigValue(pageKey)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func BuildDescriptionKey(branchName string) string {
+	return "branch." + branchName + ".description"
+}
+
+func BuildPageKey(branchName string) string {
+	return "branch." + branchName + ".page"
 }

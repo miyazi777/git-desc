@@ -27,7 +27,6 @@ import (
 	"path/filepath"
 )
 
-var branch git.Branch
 var gitConfig git.Config
 var description conf.Description
 var page conf.Page
@@ -91,11 +90,6 @@ func initConfig() {
 }
 
 func setup() {
-	branch = &git.BranchImpl{
-		Git: &git.GitImpl{
-			Command: &shell.CommandImpl{},
-		},
-	}
 	gitConfig = &git.ConfigImpl{
 		Git: &git.GitImpl{
 			Command: &shell.CommandImpl{},

@@ -19,7 +19,7 @@ func (d *DescriptionImpl) Get() (string, error) {
 		return "", err
 	}
 
-	key := buildDescriptionKey(branchName)
+	key := git.BuildDescriptionKey(branchName)
 	desc, err := d.Git.GetConfigValue(key)
 	if err != nil {
 		return "", nil
@@ -35,15 +35,11 @@ func (d *DescriptionImpl) Set(desc string) error {
 		return err
 	}
 
-	key := buildDescriptionKey(branchName)
+	key := git.BuildDescriptionKey(branchName)
 	err = d.Git.SetConfigValue(key, desc)
 	if err != nil {
 		return err
 	}
 
 	return nil
-}
-
-func buildDescriptionKey(branchName string) string {
-	return "branch." + branchName + ".description"
 }

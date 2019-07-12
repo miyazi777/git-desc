@@ -15,7 +15,7 @@ var pageOpenCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var err error
 
-		page, err := branch.Page()
+		page, err := page.Get()
 		if err != nil {
 			return err
 		}
