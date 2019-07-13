@@ -23,7 +23,7 @@ func (p *PageImpl) Get() (string, error) {
 	key := BuildPageKey(branchName)
 	description, err := p.Command.GetConfigValue(key)
 	if err != nil {
-		return "", nil
+		return "", err
 	}
 
 	return description, nil
