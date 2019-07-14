@@ -1,6 +1,7 @@
 version: 2.0
 jobs:
-  test:
+  build:
+    working_director: ~/workspace
     docker:
       - image: circleci/golang:1.12
     steps:
@@ -20,6 +21,12 @@ jobs:
       - run:
           name: github.com/stretchr/testify install
           command: go get github.com/stretchr/testify
+  test:
+    working_director: ~/workspace
+    docker:
+    steps:
+      - checkout
+      - image: circleci/golang:1.12
       - run:
           name: Test
           command: go test -v -cover -coverprofile /tmp/cover.out ./...
