@@ -1,23 +1,27 @@
 version: 2.0
 jobs:
-  one:
+  build:
     docker:
       - image: circleci/golang:1.12
     steps:
       - checkout
-      - run: echo "A first hello"
-      - run: sleep 25
-  two:
-    docker:
-      - image: circleci/golang:1.12
-    steps:
-      - checkout
-      - run: echo "A more familiar hi"
-      - run: sleep 15
-workflows:
-  version: 2
-  one_and_two:
-    job:
-      - one
-      - two
-
+      - run:
+          name: Lib install
+          command: go get github.com/mitchellh/go-homedir
+      - run:
+          name: Lib install
+          command: go get github.com/spf13/cobra
+      - run:
+          name: Lib install
+          command: go get github.com/spf13/viper
+      - run:
+          name: Lib install
+          command: go get github.com/stretchr/testify
+      - run:
+          name: Test
+          command: go test -v -cover -coverprofile /tmp/cover.out ./...
+      - run:
+          name: Generate code coverage
+          command: go tool cover -html=/tmp/cover.out -o /tmp/cover.html
+      - store_artifacts:
+          path: /tmp/cover.html
