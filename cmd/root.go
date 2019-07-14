@@ -93,7 +93,7 @@ func initConfig() {
 func setup() {
 	command := &shell.CommandImpl{}
 
-	gitCommand := &git.CommandImpl{
+	gitCommand = &git.CommandImpl{
 		Command: command,
 	}
 

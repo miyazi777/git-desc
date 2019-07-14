@@ -18,7 +18,7 @@ type CommandImpl struct {
 	Command shell.Command
 }
 
-func (c CommandImpl) GetConfigList() ([]string, error) {
+func (c *CommandImpl) GetConfigList() ([]string, error) {
 	result, err := c.Command.Run("git", "config", "--local", "--list")
 	if err != nil {
 		return nil, errors.New("Not a git repository")
@@ -27,7 +27,7 @@ func (c CommandImpl) GetConfigList() ([]string, error) {
 	return strings.Split(result, "\n"), nil
 }
 
-func (c CommandImpl) GetCurrentBranch() (string, error) {
+func (c *CommandImpl) GetCurrentBranch() (string, error) {
 	result, err := c.Command.Run("git", "symbolic-ref", "--short", "HEAD")
 	if err != nil {
 		return "", errors.New("Not a git repository")
@@ -35,7 +35,7 @@ func (c CommandImpl) GetCurrentBranch() (string, error) {
 	return result, nil
 }
 
-func (c CommandImpl) SetConfigValue(key string, value string) error {
+func (c *CommandImpl) SetConfigValue(key string, value string) error {
 	_, err := c.Command.Run("git", "config", "--local", key, value)
 	if err != nil {
 		return errors.New("Not a git repository")
@@ -43,7 +43,7 @@ func (c CommandImpl) SetConfigValue(key string, value string) error {
 	return nil
 }
 
-func (c CommandImpl) GetConfigValue(key string) (string, error) {
+func (c *CommandImpl) GetConfigValue(key string) (string, error) {
 	result, err := c.Command.Run("git", "config", "--local", key)
 	if err != nil {
 		return "", errors.New("Not a git repository")
@@ -51,7 +51,7 @@ func (c CommandImpl) GetConfigValue(key string) (string, error) {
 	return result, nil
 }
 
-func (c CommandImpl) DeleteConfigValue(key string) error {
+func (c *CommandImpl) DeleteConfigValue(key string) error {
 	var err error
 	result, err := c.Command.Run("git", "config", key)
 	if result == "" {

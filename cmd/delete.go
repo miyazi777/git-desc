@@ -34,7 +34,7 @@ var deleteCmd = &cobra.Command{
 }
 
 func init() {
-	setCmd.PersistentFlags().StringP("branch", "b", "", "delete branch name")
+	deleteCmd.PersistentFlags().StringP("branch", "b", "", "delete branch name")
 	rootCmd.AddCommand(deleteCmd)
 
 	// Here you will define your flags and configuration settings.
