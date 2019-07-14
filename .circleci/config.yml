@@ -1,6 +1,6 @@
 version: 2.0
 jobs:
-  build:
+  setup:
     working_director: ~/workspace
     docker:
       - image: circleci/golang:1.12
@@ -24,6 +24,7 @@ jobs:
   test:
     working_director: ~/workspace
     docker:
+      - image: circleci/golang:1.12
     steps:
       - checkout
       - image: circleci/golang:1.12
@@ -35,3 +36,12 @@ jobs:
           command: go tool cover -html=/tmp/cover.out -o /tmp/cover.html
       - store_artifacts:
           path: /tmp/cover.html
+workflows:
+  version: 2
+  setup_and_deploy:
+    jobs:
+      - setup
+      - test:
+          requires:
+            - setup
+
