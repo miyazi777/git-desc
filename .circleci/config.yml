@@ -16,6 +16,9 @@ jobs:
           command: go get github.com/spf13/viper
       - run:
           name: Lib install
+          command: go get github.com/cheynewallace/tabby
+      - run:
+          name: Lib install
           command: go get github.com/stretchr/testify
       - run:
           name: Test
