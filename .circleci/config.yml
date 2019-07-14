@@ -38,7 +38,7 @@ jobs:
           path: /tmp/cover.html
 workflows:
   version: 2
-  setup_and_deploy:
+  setup_and_test:
     jobs:
       - setup
       - test:
