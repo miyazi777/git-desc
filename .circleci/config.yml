@@ -1,24 +1,24 @@
 version: 2.0
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/golang:1.12
     steps:
       - checkout
       - run:
-          name: Lib install
+          name: github.com/mitchellh/go-homedir install
           command: go get github.com/mitchellh/go-homedir
       - run:
-          name: Lib install
+          name: github.com/spf13/cobra install
           command: go get github.com/spf13/cobra
       - run:
-          name: Lib install
+          name: github.com/spf13/viper install
           command: go get github.com/spf13/viper
       - run:
-          name: Lib install
+          name: github.com/cheynewallace/tabby install
           command: go get github.com/cheynewallace/tabby
       - run:
-          name: Lib install
+          name: github.com/stretchr/testify install
           command: go get github.com/stretchr/testify
       - run:
           name: Test
