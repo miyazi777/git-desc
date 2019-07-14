@@ -30,6 +30,7 @@ import (
 var configList config.List
 var description config.Description
 var page config.Page
+var gitCommand git.Command
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -95,6 +96,7 @@ func setup() {
 	gitCommand := &git.CommandImpl{
 		Command: command,
 	}
+
 	configList = &config.ListImpl{
 		Command: gitCommand,
 	}

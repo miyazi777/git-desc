@@ -7,7 +7,7 @@ import (
 type Description interface {
 	Get() (string, error)
 	Set(desc string) error
-	DeleteDescription() error
+	DeleteDescription(branchName string) error
 }
 
 type DescriptionImpl struct {
@@ -45,15 +45,9 @@ func (d *DescriptionImpl) Set(desc string) error {
 	return nil
 }
 
-func (d *DescriptionImpl) DeleteDescription() error {
-	var err error
-	branchName, err := d.Command.GetCurrentBranch()
-	if err != nil {
-		return err
-	}
-
+func (d *DescriptionImpl) DeleteDescription(branchName string) error {
 	descKey := buildDescriptionKey(branchName)
-	err = d.Command.DeleteConfigValue(descKey)
+	err := d.Command.DeleteConfigValue(descKey)
 	if err != nil {
 		return err
 	}

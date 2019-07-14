@@ -11,12 +11,20 @@ var deleteCmd = &cobra.Command{
 	Long:  "Delete current branch descrpition.",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var err error
-		err = description.DeleteDescription()
+		branchName, _ := cmd.PersistentFlags().GetString("branch")
+		if branchName == "" {
+			branchName, err = gitCommand.GetCurrentBranch()
+			if err != nil {
+				return err
+			}
+		}
+
+		err = description.DeleteDescription(branchName)
 		if err != nil {
 			return err
 		}
 
-		err = page.DeletePage()
+		err = page.DeletePage(branchName)
 		if err != nil {
 			return err
 		}
@@ -26,6 +34,7 @@ var deleteCmd = &cobra.Command{
 }
 
 func init() {
+	setCmd.PersistentFlags().StringP("branch", "b", "", "delete branch name")
 	rootCmd.AddCommand(deleteCmd)
 
 	// Here you will define your flags and configuration settings.

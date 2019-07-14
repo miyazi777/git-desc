@@ -7,7 +7,7 @@ import (
 type Page interface {
 	Get() (string, error)
 	Set(page string) error
-	DeletePage() error
+	DeletePage(branchName string) error
 }
 
 type PageImpl struct {
@@ -45,15 +45,9 @@ func (p *PageImpl) Set(page string) error {
 	return nil
 }
 
-func (p *PageImpl) DeletePage() error {
-	var err error
-	branchName, err := p.Command.GetCurrentBranch()
-	if err != nil {
-		return err
-	}
-
+func (p *PageImpl) DeletePage(branchName string) error {
 	pageKey := BuildPageKey(branchName)
-	err = p.Command.DeleteConfigValue(pageKey)
+	err := p.Command.DeleteConfigValue(pageKey)
 	if err != nil {
 		return err
 	}
