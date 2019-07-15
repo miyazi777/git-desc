@@ -35,6 +35,12 @@ jobs:
           command: go tool cover -html=/tmp/cover.out -o /tmp/cover.html
       - store_artifacts:
           path: /tmp/cover.html
+  release:
+    docker:
+      - image: circleci/golang:1.12
+    steps:
+      - checkout
+      - run: curl -sL https://git.io/goreleaser | bash
 workflows:
   version: 2
   setup_and_test:
@@ -43,4 +49,11 @@ workflows:
       - test:
           requires:
             - setup
-
+  release:
+    jobs:
+      - release:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*(-.*)*/
