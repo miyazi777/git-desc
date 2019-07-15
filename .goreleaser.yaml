@@ -7,7 +7,7 @@ builds:
 brew:
   github:
     owner: miyazi777
-    name: git-desc
+    name: homebrew-git-desc
   commit_author:
     name: goreleaserbot
     email: goreleaser@carlosbecker.com
