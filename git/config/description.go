@@ -5,8 +5,8 @@ import (
 )
 
 type Description interface {
-	Get() (string, error)
-	Set(desc string) error
+	GetDesc() (string, error)
+	SetDesc(desc string) error
 	DeleteDescription(branchName string) error
 }
 
@@ -14,7 +14,7 @@ type DescriptionImpl struct {
 	Command git.Command
 }
 
-func (d *DescriptionImpl) Get() (string, error) {
+func (d *DescriptionImpl) GetDesc() (string, error) {
 	branchName, err := d.Command.GetCurrentBranch()
 	if err != nil {
 		return "", err
@@ -29,7 +29,7 @@ func (d *DescriptionImpl) Get() (string, error) {
 	return desc, nil
 }
 
-func (d *DescriptionImpl) Set(desc string) error {
+func (d *DescriptionImpl) SetDesc(desc string) error {
 	var err error
 	branchName, err := d.Command.GetCurrentBranch()
 	if err != nil {

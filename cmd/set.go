@@ -16,7 +16,7 @@ var setCmd = &cobra.Command{
 		var text string
 		text, _ = cmd.PersistentFlags().GetString("message")
 		if text == "" {
-			desc, err := description.Get()
+			desc, err := description.GetDesc()
 			if err != nil {
 				return err
 			}
@@ -27,7 +27,7 @@ var setCmd = &cobra.Command{
 			}
 		}
 
-		err = description.Set(text)
+		err = description.SetDesc(text)
 		return err
 	},
 }

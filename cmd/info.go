@@ -13,7 +13,7 @@ var infoCmd = &cobra.Command{
 	Long:  "Information current branch descrpition.",
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		desc, err := description.Get()
+		desc, err := description.GetDesc()
 		if err != nil {
 			return err
 		}
