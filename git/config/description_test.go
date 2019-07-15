@@ -7,146 +7,146 @@ import (
 	"testing"
 )
 
-type commandPageMock struct {
+type commandDescMock struct {
 	mock.Mock
 }
 
-func (mock *commandPageMock) GetConfigList() ([]string, error) {
+func (mock *commandDescMock) GetConfigList() ([]string, error) {
 	result := mock.Called()
 	return nil, result.Error(1)
 }
 
-func (mock *commandPageMock) GetCurrentBranch() (string, error) {
+func (mock *commandDescMock) GetCurrentBranch() (string, error) {
 	result := mock.Called()
 	return result.String(0), result.Error(1)
 }
 
-func (mock *commandPageMock) SetConfigValue(key string, value string) error {
+func (mock *commandDescMock) SetConfigValue(key string, value string) error {
 	result := mock.Called(key, value)
 	return result.Error(0)
 }
 
-func (mock *commandPageMock) GetConfigValue(key string) (string, error) {
+func (mock *commandDescMock) GetConfigValue(key string) (string, error) {
 	result := mock.Called()
 	return result.String(0), result.Error(1)
 }
 
-func (mock *commandPageMock) DeleteConfigValue(key string) error {
+func (mock *commandDescMock) DeleteConfigValue(key string) error {
 	result := mock.Called(key)
 	return result.Error(0)
 }
 
-func TestGetPageSuccess(t *testing.T) {
-	commandMock := new(commandPageMock)
+func TestGetDescSuccess(t *testing.T) {
+	commandMock := new(commandDescMock)
 	commandMock.On("GetCurrentBranch").Return("test-branch", nil)
 	commandMock.On("GetConfigValue").Return("test-value", nil)
 
-	p := &PageImpl{
+	d := &DescriptionImpl{
 		Command: commandMock,
 	}
-	result, err := p.GetPage()
+	result, err := d.GetDesc()
 
 	assert := assert.New(t)
 	assert.Equal(result, "test-value")
 	assert.NoError(err)
 }
 
-func TestGetPageFailed1(t *testing.T) {
-	commandMock := new(commandPageMock)
+func TestGetDescFailed1(t *testing.T) {
+	commandMock := new(commandDescMock)
 	commandMock.On("GetCurrentBranch").Return("test-branch", errors.New("test error"))
 	commandMock.On("GetConfigValue").Return("test-value", nil)
 
-	p := &PageImpl{
+	p := &DescriptionImpl{
 		Command: commandMock,
 	}
-	result, err := p.GetPage()
+	result, err := p.GetDesc()
 
 	assert := assert.New(t)
 	assert.Empty(result)
 	assert.EqualError(err, "test error")
 }
 
-func TestGetPageFailed2(t *testing.T) {
-	commandMock := new(commandPageMock)
+func TestGetDescFailed2(t *testing.T) {
+	commandMock := new(commandDescMock)
 	commandMock.On("GetCurrentBranch").Return("test-branch", nil)
 	commandMock.On("GetConfigValue").Return("test-value", errors.New("test error"))
 
-	p := &PageImpl{
+	p := &DescriptionImpl{
 		Command: commandMock,
 	}
-	result, err := p.GetPage()
+	result, err := p.GetDesc()
 
 	assert := assert.New(t)
 	assert.Empty(result)
 	assert.NoError(err)
 }
 
-func TestSetPageSuccess(t *testing.T) {
-	commandMock := &commandPageMock{}
+func TestSetDescSuccess(t *testing.T) {
+	commandMock := &commandDescMock{}
 	commandMock.On("GetCurrentBranch").Return("test-branch", nil)
 	commandMock.On("SetConfigValue", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(nil)
 
-	p := &PageImpl{
+	p := &DescriptionImpl{
 		Command: commandMock,
 	}
-	err := p.SetPage("test-value")
+	err := p.SetDesc("test-value")
 
 	assert := assert.New(t)
 	assert.NoError(err)
-	commandMock.AssertCalled(t, "SetConfigValue", "branch.test-branch.page", "test-value")
+	commandMock.AssertCalled(t, "SetConfigValue", "branch.test-branch.description", "test-value")
 }
 
-func TestSetPageFailed1(t *testing.T) {
-	commandMock := &commandPageMock{}
+func TestSetDescFailed1(t *testing.T) {
+	commandMock := &commandDescMock{}
 	commandMock.On("GetCurrentBranch").Return("test-branch", errors.New("test error"))
 	commandMock.On("SetConfigValue", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(nil)
 
-	p := &PageImpl{
+	p := &DescriptionImpl{
 		Command: commandMock,
 	}
-	err := p.SetPage("test-value")
+	err := p.SetDesc("test-value")
 
 	assert := assert.New(t)
 	assert.EqualError(err, "test error")
 }
 
-func TestSetPageFailed2(t *testing.T) {
-	commandMock := &commandPageMock{}
+func TestSetDescFailed2(t *testing.T) {
+	commandMock := &commandDescMock{}
 	commandMock.On("GetCurrentBranch").Return("test-branch", nil)
 	commandMock.On("SetConfigValue", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(errors.New("test error"))
 
-	p := &PageImpl{
+	p := &DescriptionImpl{
 		Command: commandMock,
 	}
-	err := p.SetPage("test-value")
+	err := p.SetDesc("test-value")
 
 	assert := assert.New(t)
 	assert.EqualError(err, "test error")
 	commandMock.AssertCalled(t, "GetCurrentBranch")
 }
 
-func TestDeletePageSuccess(t *testing.T) {
-	commandMock := &commandPageMock{}
+func TestDeleteDescSuccess(t *testing.T) {
+	commandMock := &commandDescMock{}
 	commandMock.On("DeleteConfigValue", mock.AnythingOfType("string")).Return(nil)
 
-	p := &PageImpl{
+	p := &DescriptionImpl{
 		Command: commandMock,
 	}
-	err := p.DeletePage("test-branch")
+	err := p.DeleteDescription("test-branch")
 
 	assert := assert.New(t)
 	assert.NoError(err)
-	commandMock.AssertCalled(t, "DeleteConfigValue", "branch.test-branch.page")
+	commandMock.AssertCalled(t, "DeleteConfigValue", "branch.test-branch.description")
 }
 
-func TestDeletePageFailed(t *testing.T) {
-	commandMock := &commandPageMock{}
+func TestDeleteDescFailed(t *testing.T) {
+	commandMock := &commandDescMock{}
 	commandMock.On("DeleteConfigValue", mock.AnythingOfType("string")).Return(errors.New("test error"))
 
-	p := &PageImpl{
+	p := &DescriptionImpl{
 		Command: commandMock,
 	}
-	err := p.DeletePage("")
+	err := p.DeleteDescription("")
 
 	assert := assert.New(t)
 	assert.EqualError(err, "test error")
