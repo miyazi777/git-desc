@@ -36,7 +36,7 @@ func (mock *commandMock) DeleteConfigValue(key string) error {
 	return result.Error(0)
 }
 
-func TestGetSuccess(t *testing.T) {
+func TestGetPageSuccess(t *testing.T) {
 	commandMock := new(commandMock)
 	commandMock.On("GetCurrentBranch").Return("test-branch", nil)
 	commandMock.On("GetConfigValue").Return("test-value", nil)
@@ -44,14 +44,14 @@ func TestGetSuccess(t *testing.T) {
 	p := &PageImpl{
 		Command: commandMock,
 	}
-	result, err := p.Get()
+	result, err := p.GetPage()
 
 	assert := assert.New(t)
 	assert.Equal(result, "test-value")
 	assert.NoError(err)
 }
 
-func TestGetFailed1(t *testing.T) {
+func TestGetPageFailed1(t *testing.T) {
 	commandMock := new(commandMock)
 	commandMock.On("GetCurrentBranch").Return("test-branch", errors.New("test error"))
 	commandMock.On("GetConfigValue").Return("test-value", nil)
@@ -59,14 +59,14 @@ func TestGetFailed1(t *testing.T) {
 	p := &PageImpl{
 		Command: commandMock,
 	}
-	result, err := p.Get()
+	result, err := p.GetPage()
 
 	assert := assert.New(t)
 	assert.Empty(result)
 	assert.EqualError(err, "test error")
 }
 
-func TestGetFailed2(t *testing.T) {
+func TestGetPageFailed2(t *testing.T) {
 	commandMock := new(commandMock)
 	commandMock.On("GetCurrentBranch").Return("test-branch", nil)
 	commandMock.On("GetConfigValue").Return("test-value", errors.New("test error"))
@@ -74,14 +74,14 @@ func TestGetFailed2(t *testing.T) {
 	p := &PageImpl{
 		Command: commandMock,
 	}
-	result, err := p.Get()
+	result, err := p.GetPage()
 
 	assert := assert.New(t)
 	assert.Empty(result)
 	assert.NoError(err)
 }
 
-func TestSetSuccess(t *testing.T) {
+func TestSetPageSuccess(t *testing.T) {
 	commandMock := &commandMock{}
 	commandMock.On("GetCurrentBranch").Return("test-branch", nil)
 	commandMock.On("SetConfigValue", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(nil)
@@ -89,14 +89,14 @@ func TestSetSuccess(t *testing.T) {
 	p := &PageImpl{
 		Command: commandMock,
 	}
-	err := p.Set("test-value")
+	err := p.SetPage("test-value")
 
 	assert := assert.New(t)
 	assert.NoError(err)
 	commandMock.AssertCalled(t, "SetConfigValue", "branch.test-branch.page", "test-value")
 }
 
-func TestSetFailed1(t *testing.T) {
+func TestSetPageFailed1(t *testing.T) {
 	commandMock := &commandMock{}
 	commandMock.On("GetCurrentBranch").Return("test-branch", errors.New("test error"))
 	commandMock.On("SetConfigValue", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(nil)
@@ -104,13 +104,13 @@ func TestSetFailed1(t *testing.T) {
 	p := &PageImpl{
 		Command: commandMock,
 	}
-	err := p.Set("test-value")
+	err := p.SetPage("test-value")
 
 	assert := assert.New(t)
 	assert.EqualError(err, "test error")
 }
 
-func TestSetFailed2(t *testing.T) {
+func TestSetPageFailed2(t *testing.T) {
 	commandMock := &commandMock{}
 	commandMock.On("GetCurrentBranch").Return("test-branch", nil)
 	commandMock.On("SetConfigValue", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(errors.New("test error"))
@@ -118,7 +118,7 @@ func TestSetFailed2(t *testing.T) {
 	p := &PageImpl{
 		Command: commandMock,
 	}
-	err := p.Set("test-value")
+	err := p.SetPage("test-value")
 
 	assert := assert.New(t)
 	assert.EqualError(err, "test error")

@@ -14,7 +14,7 @@ var pageSetCmd = &cobra.Command{
 		var text string
 		text, _ = cmd.PersistentFlags().GetString("page")
 		if text == "" {
-			page, err := page.Get()
+			page, err := page.GetPage()
 			if err != nil {
 				return err
 			}
@@ -25,7 +25,7 @@ var pageSetCmd = &cobra.Command{
 			}
 		}
 
-		err := page.Set(text)
+		err := page.SetPage(text)
 		return err
 	},
 }

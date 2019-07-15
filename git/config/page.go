@@ -5,8 +5,8 @@ import (
 )
 
 type Page interface {
-	Get() (string, error)
-	Set(page string) error
+	GetPage() (string, error)
+	SetPage(page string) error
 	DeletePage(branchName string) error
 }
 
@@ -14,7 +14,7 @@ type PageImpl struct {
 	Command git.Command
 }
 
-func (p *PageImpl) Get() (string, error) {
+func (p *PageImpl) GetPage() (string, error) {
 	branchName, err := p.Command.GetCurrentBranch()
 	if err != nil {
 		return "", err
@@ -29,7 +29,7 @@ func (p *PageImpl) Get() (string, error) {
 	return page, nil
 }
 
-func (p *PageImpl) Set(page string) error {
+func (p *PageImpl) SetPage(page string) error {
 	var err error
 	branchName, err := p.Command.GetCurrentBranch()
 	if err != nil {
