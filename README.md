@@ -2,11 +2,18 @@
 これはgit branch --edit-descriptionなどでブランチに説明を追加するコマンドの代わりとなるCLIツールです。
 
 ## Environment
-現状、macのみで、go getでのインストールのみなので、goもインストールされている必要があります。
+現状、macのみしか動作しません。
 
 ## Install
 ```
-go get github.com/miyazi777/git-desc
+brew tap miyazi777/gitdesc
+brew install miyazi777/gitdesc/gitdesc
+```
+
+or
+
+```
+go get github.com/miyazi777/gitdesc
 ```
 
 ## Usage
@@ -18,17 +25,17 @@ git-desc set
 
 また、-mオプションを付けることでエディタを起動せず、説明を設定できます。
 ```
-git-desc set -m "branch description"
+gitdesc set -m "branch description"
 ```
 
 ### 現在のブランチの説明と関連するwebページのURLを表示
 ```
-git-desc info
+gitdesc info
 ```
 
 ### 全ブランチの説明を表示
 ```
-git-desc list
+gitdesc list
 ```
 
 また、--only-listオプションを付けることでリストのみを表示します。
@@ -36,23 +43,23 @@ git-desc list
 ### 現在のブランチに関連するwebページを登録
 以下のコマンドで環境変数$EDITORに設定されているエディタが起動し、編集したテキストが現在のブランチの関連ページとなります。
 ```
-git-desc page set
+gitdesc page set
 ```
 
 また、-mオプションを付けることでエディタを起動せず、webページを設定できます。
 ```
-git-desc page set -m "web page url"
+gitdesc page set -m "web page url"
 ```
 
 ### 現在のブランチに関連するwebページをブラウザで開く
 ```
-git-desc page open
+gitdesc page open
 ```
 
 ### 現在のブランチの説明と関連するwebページを削除
 以下のコマンドで現在のブランチの説明と関連webページに関する情報を削除します。
 ```
-git-desc delete
+gitdesc delete
 ```
 
 ## config
@@ -69,13 +76,14 @@ editor: nvim
 ```
 
 # fzfとの連携例
+## ブランチの移動
 fzfを使用しているのであれば、以下のようなスクリプトを.bashrcや.zshrcに記述することでブランチを確認しながら、移動することができます。
 以下のスクリプトではターミナルでblと打ち込むとこのツールのlistからブランチを選択し、移動することが出来ます。
 
 ```zsh
 # git desc setting
 bl() {
-  branches=$(git-desc list --only-list) &&
+  branches=$(gitdesc list --only-list) &&
   select_line=$(echo "$branches" | fzf +m)
   git checkout $(echo ${select_line} | cut -d" " -f 1)
 }
