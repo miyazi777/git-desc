@@ -6,36 +6,36 @@
 
 ## Install
 ```
-brew tap miyazi777/gitdesc
-brew install miyazi777/gitdesc/gitdesc
+brew tap miyazi777/git-desc
+brew install miyazi777/gitdesc/git-desc
 ```
 
 or
 
 ```
-go get github.com/miyazi777/gitdesc
+go get github.com/miyazi777/git-desc
 ```
 
 ## Usage
 ### 現在のブランチに説明を追加
 以下のコマンドで環境変数$EDITORに設定されているエディタが起動し、編集したテキストが現在のブランチの説明になります。
 ```
-gitdesc set
+git-desc set
 ```
 
 また、-mオプションを付けることでエディタを起動せず、説明を設定できます。
 ```
-gitdesc set -m "branch description"
+git-desc set -m "branch description"
 ```
 
 ### 現在のブランチの説明と関連するwebページのURLを表示
 ```
-gitdesc info
+git-desc info
 ```
 
 ### 全ブランチの説明を表示
 ```
-gitdesc list
+git-desc list
 ```
 
 また、--only-listオプションを付けることでリストのみを表示します。
@@ -43,23 +43,23 @@ gitdesc list
 ### 現在のブランチに関連するwebページを登録
 以下のコマンドで環境変数$EDITORに設定されているエディタが起動し、編集したテキストが現在のブランチの関連ページとなります。
 ```
-gitdesc page set
+git-desc page set
 ```
 
 また、-mオプションを付けることでエディタを起動せず、webページを設定できます。
 ```
-gitdesc page set -m "web page url"
+git-desc page set -m "web page url"
 ```
 
 ### 現在のブランチに関連するwebページをブラウザで開く
 ```
-gitdesc page open
+git-desc page open
 ```
 
 ### 現在のブランチの説明と関連するwebページを削除
 以下のコマンドで現在のブランチの説明と関連webページに関する情報を削除します。
 ```
-gitdesc delete
+git-desc delete
 ```
 
 ## config
@@ -83,7 +83,7 @@ fzfを使用しているのであれば、以下のようなスクリプトを.b
 ```zsh
 # git desc setting
 bl() {
-  branches=$(gitdesc list --only-list) &&
+  branches=$(git-desc list --only-list) &&
   select_line=$(echo "$branches" | fzf +m)
   git checkout $(echo ${select_line} | cut -d" " -f 1)
 }
