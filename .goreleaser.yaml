@@ -12,7 +12,7 @@ brew:
     name: goreleaserbot
     email: goreleaser@carlosbecker.com
   description: "Git descrption CLI Tool"
-  homepage: "https://github.com/miyazi777/gitdesc"
+  homepage: "https://github.com/miyazi777/git-desc"
   install: |
     bin.install Dir['git-desc']
   test: |
