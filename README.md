@@ -7,7 +7,7 @@
 ## Install
 ```
 brew tap miyazi777/git-desc
-brew install miyazi777/gitdesc/git-desc
+brew install miyazi777/git-desc/git-desc
 ```
 
 or
